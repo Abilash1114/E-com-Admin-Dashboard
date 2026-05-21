@@ -1,0 +1,68 @@
+<aside class="right-panel">
+
+  <!-- Profile Card -->
+  <div class="profile-card fade-in fade-in-1">
+    <div class="profile-banner">
+      <div class="profile-gem-icon">
+        <i class="ri-vip-diamond-fill"></i>
+      </div>
+      <button class="profile-menu-btn">
+        <i class="ri-more-2-fill"></i>
+      </button>
+    </div>
+    <div class="profile-body">
+      <div class="profile-name-row">
+        <span class="pname">Admin Jewellers</span>
+        <span class="verified-badge"><i class="ri-verified-badge-fill"></i> Verified</span>
+      </div>
+      <div class="prole">Super Admin</div>
+      <div class="profile-stats">
+        <div class="pstat">
+          <div class="pstat-val">1,248</div>
+          <div class="pstat-key">Orders</div>
+        </div>
+        <div class="pstat">
+          <div class="pstat-val">836</div>
+          <div class="pstat-key">Customers</div>
+        </div>
+        <div class="pstat">
+          <div class="pstat-val">542</div>
+          <div class="pstat-key">Products</div>
+        </div>
+      </div>
+      <button class="view-store-btn">
+        <i class="ri-store-2-line"></i> View Store <i class="ri-external-link-line"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="ss-card fade-in fade-in-2">
+    <div class="card-hd">
+      <span class="card-title">Recent Activity</span>
+      <span class="live-dot"></span>
+      <a class="view-all">View All</a>
+    </div>
+    <div class="activity-feed">
+      <div class="act-item" *ngFor="let a of activities">
+        <div class="act-icon-wrap" [style.background]="a.bg">
+          <i [class]="a.icon" [style.color]="a.color"></i>
+        </div>
+        <div class="act-body">
+          <div class="act-title">{{ a.title }}</div>
+          <div class="act-sub">{{ a.sub }}</div>
+        </div>
+        <div class="act-time">{{ a.time }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Promo -->
+  <div class="promo-card fade-in fade-in-3">
+    <span class="promo-icon">🛍️</span>
+    <div class="promo-title">Grow your business</div>
+    <div class="promo-sub">Explore marketing tools to boost your sales and reach more customers.</div>
+    <button class="promo-btn"><i class="ri-rocket-line"></i> Explore Tools</button>
+  </div>
+
+</aside>

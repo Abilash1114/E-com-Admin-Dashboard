@@ -1,0 +1,205 @@
+<div class="container-fluid px-0">
+  <!-- Stat Cards Row -->
+  <div class="row g-3 mb-3">
+    <div class="col" *ngFor="let s of statCards; let i = index">
+      <div class="stat-card fade-in" [style.animation-delay]="(i * 0.07) + 's'" [style.--card-color]="s.accent">
+        <div class="stat-icon-wrap" [style.background]="s.bg">
+          <i [class]="s.icon" [style.color]="s.color"></i>
+        </div>
+        <div class="flex-fill">
+          <div class="stat-label">
+            {{ s.label }}
+            <span class="stat-dots"><i class="ri-more-2-fill"></i></span>
+          </div>
+          <div class="stat-value" [attr.data-target]="s.rawValue"
+            [attr.data-prefix]="s.label === 'Total Sales' ? '$' : (s.label === 'Avg. Order Value' ? '$' : '')"
+            [attr.data-suffix]="s.label === 'Total Sales' ? '' : ''">
+            {{ s.value }}
+          </div>
+          <div class="stat-change text-success">
+            <i class="ri-arrow-up-line"></i> {{ s.change }}
+            <span class="vs"> vs last week</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2: Sales Overview + Top Products -->
+  <div class="row g-3 mb-3">
+    <!-- Sales Overview -->
+    <div class="col-7">
+      <div class="ss-card fade-in fade-in-2">
+        <div class="card-hd">
+          <span class="card-title">Sales Overview</span>
+          <div class="chart-legend me-2">
+            <span class="leg-item"><span class="leg-line leg-solid"></span> This Week</span>
+            <span class="leg-item"><span class="leg-line leg-dashed"></span> Last Week</span>
+          </div>
+          <select class="period-sel">
+            <option>This Week</option>
+            <option>Last Week</option>
+            <option>This Month</option>
+          </select>
+        </div>
+        <div class="chart-wrap">
+          <canvas #salesChart></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Selling Products -->
+    <div class="col-5">
+      <div class="ss-card fade-in fade-in-3">
+        <div class="card-hd">
+          <span class="card-title">Top Selling Products</span>
+          <a class="view-all">View All</a>
+        </div>
+        <div class="product-list">
+          <div class="product-row" *ngFor="let p of topProducts; let i = index">
+            <div class="product-rank">{{ i + 1 }}</div>
+            <div class="product-icon-wrap">{{ p.icon }}</div>
+            <div class="product-name">{{ p.name }}</div>
+            <div class="product-sold"><i class="ri-shopping-cart-line" style="color:#8b93a7;font-size:11px"></i> {{
+              p.sold }}</div>
+            <div class="product-rev">{{ p.revenue }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 3: Order Status + Sales by Channel + Customer Insights -->
+  <div class="row g-3 mb-3">
+    <!-- Order Status -->
+    <div class="col-3">
+      <div class="ss-card fade-in fade-in-2" style="height:100%">
+        <div class="card-hd"><span class="card-title">Order Status</span></div>
+        <div class="donut-section" style="flex-direction: column !important;">
+          <div class="donut-wrap">
+            <canvas #orderChart style="width:120px;height:120px"></canvas>
+            <div class="donut-center">
+              <div class="donut-num">1,248</div>
+              <div class="donut-label">Total Orders</div>
+            </div>
+          </div>
+          <div class="order-legend">
+            <div class="ol-item" *ngFor="let o of orderStatusData">
+              <span class="ol-dot" [style.background]="o.color"></span>
+              <span class="ol-name">{{ o.label }}</span>
+              <span class="ol-count">{{ o.count }}</span>
+              <span class="ol-pct">({{ o.pct }}%)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sales by Channel -->
+    <div class="col-5">
+      <div class="ss-card fade-in fade-in-3" style="height:100%">
+        <div class="card-hd">
+          <span class="card-title">Sales by Channel</span>
+          <select class="period-sel">
+            <option>This Week</option>
+          </select>
+        </div>
+        <div class="channel-list">
+          <div class="channel-row" *ngFor="let c of salesChannels">
+            <div class="ch-icon-wrap" [style.background]="c.color + '18'">
+              <i [class]="c.icon" [style.color]="c.color"></i>
+            </div>
+            <div class="ch-body">
+              <div class="ch-name">{{ c.name }}</div>
+              <div class="ch-bar-track">
+                <div class="ch-bar-fill" [attr.data-width]="c.barW" [style.background]="c.color" style="width:0%"></div>
+              </div>
+            </div>
+            <div class="ch-amount">{{ c.amount }}</div>
+            <div class="ch-pct">{{ c.pct }}%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Customer Insights -->
+    <div class="col-4">
+      <div class="ss-card fade-in fade-in-4" style="height:100%">
+        <div class="card-hd"><span class="card-title">Customer Insights</span></div>
+        <div class="insight-grid">
+          <div class="insight-row" *ngFor="let i of customerInsights">
+            <div class="ins-icon" [style.background]="i.bg">
+              <i [class]="i.icon" [style.color]="i.color"></i>
+            </div>
+            <div class="ins-label">{{ i.label }}</div>
+            <div class="ins-val">{{ i.value }}</div>
+            <div class="ins-chg">{{ i.change }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 4: Recent Orders + Sales by Location -->
+  <div class="row g-3">
+    <!-- Recent Orders -->
+    <div class="col-8">
+      <div class="ss-card fade-in fade-in-3">
+        <div class="card-hd">
+          <span class="card-title">Recent Orders</span>
+          <a class="view-all"><i class="ri-arrow-right-up-line"></i> View All Orders</a>
+        </div>
+        <div class="table-responsive">
+          <table class="orders-tbl">
+            <thead>
+              <tr>
+                <th><i class="ri-hashtag"></i> Order ID</th>
+                <th><i class="ri-user-line"></i> Customer</th>
+                <th><i class="ri-calendar-line"></i> Date</th>
+                <th><i class="ri-money-dollar-circle-line"></i> Amount</th>
+                <th><i class="ri-information-line"></i> Status</th>
+                <th><i class="ri-bank-card-line"></i> Payment</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let o of recentOrders">
+                <td class="tbl-id">{{ o.id }}</td>
+                <td>{{ o.customer }}</td>
+                <td class="tbl-date">{{ o.date }}</td>
+                <td class="tbl-amt">{{ o.amount }}</td>
+                <td><span [class]="getStatusClass(o.status)">{{ o.status }}</span></td>
+                <td><span [class]="getPaymentClass(o.payment)">{{ o.payment }}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sales by Location -->
+    <div class="col-4">
+      <div class="ss-card fade-in fade-in-4">
+        <div class="card-hd">
+          <span class="card-title">Sales by Location</span>
+          <a class="view-all">View All</a>
+        </div>
+        <div class="map-container mb-2" style="height:100px">
+          <img src="assets/images/map.png" class="img-fluid">
+        </div>
+        <div class="location-list">
+          <div class="loc-row" *ngFor="let l of salesByLocation">
+            <span class="loc-flag">{{ l.flag }}</span>
+            <span class="loc-name">{{ l.country }}</span>
+            <div class="loc-bar-track" style="max-width:60px;">
+              <div class="loc-bar-fill" [style.background]="l.color" [attr.data-width]="l.pct"
+                style="width:0%;height:100%;border-radius:4px;"></div>
+            </div>
+            <span class="loc-amt">{{ l.amount }}</span>
+            <span class="loc-pct">{{ l.pct }}%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

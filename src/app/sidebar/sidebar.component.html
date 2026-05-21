@@ -1,0 +1,55 @@
+<aside class="sidebar" [class.collapsed]="collapsed">
+  <!-- Brand -->
+  <div class="brand-wrap">
+    <div class="brand-logo">
+      <i class="ri-shopping-cart-2-fill"></i>
+    </div>
+    <div class="brand-text" *ngIf="!collapsed">
+      <div class="brand-name">ShopSphere</div>
+      <div class="brand-sub">Ecommerce Admin</div>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <nav class="nav-section">
+    <ng-container *ngFor="let group of navGroups">
+      <div class="nav-label-group" *ngIf="!collapsed">{{ group.label }}</div>
+      <a class="nav-link" *ngFor="let item of group.items" [class.active]="active === item.label"
+        (click)="setActive(item.label)" [title]="collapsed ? item.label : ''">
+        <i [class]="item.icon"></i>
+        <span class="nav-text" *ngIf="!collapsed">{{ item.label }}</span>
+        <span class="nav-badge" *ngIf="item.badge && !collapsed">{{ item.badge }}</span>
+      </a>
+    </ng-container>
+  </nav>
+
+  <!-- Store Performance -->
+  <div class="store-perf" *ngIf="!collapsed">
+    <div class="perf-head">Store Performance</div>
+    <div class="perf-val"><i class="ri-arrow-up-line"></i> Excellent</div>
+    <div class="perf-sub">↑ 24% vs last month</div>
+    <div class="perf-spark">
+      <svg viewBox="0 0 130 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="0,22 20,17 40,20 60,9 80,14 100,6 130,3" stroke="#6c3ce1" stroke-width="2" fill="none"
+          stroke-linecap="round" stroke-linejoin="round" />
+        <circle cx="130" cy="3" r="3" fill="#6c3ce1" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- User -->
+  <div class="user-section">
+    <div class="user-avatar">VJ</div>
+    <div class="user-info" *ngIf="!collapsed">
+      <div class="user-name">Admin Jewellers</div>
+      <div class="user-role">Super Admin</div>
+    </div>
+    <i class="ri-arrow-right-s-line user-chevron" *ngIf="!collapsed"></i>
+  </div>
+
+  <!-- Collapse -->
+  <div class="collapse-btn" (click)="toggle()">
+    <i class="ri-arrow-left-s-line"></i>
+    <span *ngIf="!collapsed">Collapse Menu</span>
+  </div>
+</aside>

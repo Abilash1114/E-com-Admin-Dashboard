@@ -1,0 +1,15 @@
+<div class="app-shell">
+  <app-sidebar
+    (collapseChange)="onCollapseChange($event)"
+  ></app-sidebar>
+
+  <div class="main-area">
+    <app-topbar></app-topbar>
+
+    <div class="page-body">
+      <app-dashboard></app-dashboard>
+    </div>
+  </div>
+
+  <app-right-panel></app-right-panel>
+</div>
